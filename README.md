@@ -7,9 +7,8 @@
 ### Step: Build
 * To create build jar, import the project in IDE(IntelliJ) - Build
 * go to Maven configurations - lifecycle - package to generate the jar, which is created as - target/pa3-1.0-SNAPSHOT.jar
-![build.png](misc/build.png)
 
-
+<img src="misc/build.png" height="300"/>
 
 ### Step: Run
 * change current directory to src <br>

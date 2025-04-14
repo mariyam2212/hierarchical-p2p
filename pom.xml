@@ -17,7 +17,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.iit.Main</mainClass>
+                            <mainClass>com.aos.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

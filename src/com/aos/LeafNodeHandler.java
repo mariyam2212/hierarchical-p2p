@@ -1,6 +1,5 @@
-package com.iit;
+package com.aos;
 
-import com.iit.MessageFormat;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -8,7 +7,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-class LeafNode extends Thread {
+class LeafNodeHandler extends Thread {
 
    int leafNodePort;
    int connectedSuperpeer;
@@ -21,7 +20,7 @@ class LeafNode extends Thread {
    MessageFormat MF = new MessageFormat();
 
 
-   public LeafNode(int leafNodePort, int connectedSuperpeer, String filetodownload, String msgid, int frompeerId, int timeToLive) {
+   public LeafNodeHandler(int leafNodePort, int connectedSuperpeer, String filetodownload, String msgid, int frompeerId, int timeToLive) {
       this.leafNodePort = leafNodePort;
       this.connectedSuperpeer = connectedSuperpeer;
       this.filetodownload = filetodownload;

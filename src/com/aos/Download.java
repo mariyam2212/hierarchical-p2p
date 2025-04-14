@@ -1,8 +1,5 @@
-package com.iit;
+package com.aos;
 
-import com.iit.LeafNode;
-import com.iit.Main;
-import com.iit.MessageFormat;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -22,7 +19,7 @@ class Download extends Thread {
    int peer_id;
    ArrayList<String> peermsg;
    ArrayList<Thread> thread = new ArrayList();
-   ArrayList<LeafNode> peerswithfiles = new ArrayList();
+   ArrayList<LeafNodeHandler> peerswithfiles = new ArrayList();
    int[] peersArray_list = new int[20];
    int[] a = new int[20];
    int countofpeers = 0;
@@ -30,6 +27,7 @@ class Download extends Thread {
    int set = 0;
    int TTL_value;
    MessageFormat MF = new MessageFormat();
+   LogUtility logUtility = new LogUtility();
 
 
    Download(Socket socket, String FileDirectory, int peer_id, ArrayList<String> peermsg) {
@@ -47,6 +45,7 @@ class Download extends Thread {
          ObjectOutputStream oos = new ObjectOutputStream(os);
          this.MF = (MessageFormat)ois.readObject();
          System.out.println("New Query received from peer with peer-id : " + this.MF.fromPeerId);
+         logUtility.write("New Query received from peer with peer-id : " + this.MF.fromPeerId);
          boolean peerduplicate = this.peermsg.contains(this.MF.message_ID);
          if(!peerduplicate) {
             this.peermsg.add(this.MF.message_ID);
@@ -84,7 +83,7 @@ class Download extends Thread {
                      int connectingport = Integer.parseInt(var21.getProperty("peer" + i[j] + ".port"));
                      int neighbouringpeer = Integer.parseInt(i[j]);
                      System.out.println("Query forwarded to next neighbour: " + neighbouringpeer);
-                     LeafNode cp = new LeafNode(connectingport, neighbouringpeer, this.fname, this.MF.message_ID, this.peer_id, this.MF.ttl--);
+                     LeafNodeHandler cp = new LeafNodeHandler(connectingport, neighbouringpeer, this.fname, this.MF.message_ID, this.peer_id, this.MF.ttl--);
                      Thread t = new Thread(cp);
                      t.start();
                      this.thread.add(t);
@@ -99,7 +98,7 @@ class Download extends Thread {
             }
 
             for(var22 = 0; var22 < this.peerswithfiles.size(); ++var22) {
-               this.a = ((LeafNode)this.peerswithfiles.get(var22)).getarray();
+               this.a = ((LeafNodeHandler)this.peerswithfiles.get(var22)).getarray();
 
                for(j = 0; j < this.a.length && this.a[j] != 0; ++j) {
                   this.peersArray_list[this.countofpeers++] = this.a[j];

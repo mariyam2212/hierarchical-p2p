@@ -1,6 +1,5 @@
-package com.iit;
+package com.aos;
 
-import com.iit.Download;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,6 +13,7 @@ public class Superpeer extends Thread {
    Socket socket = null;
    int peer_id;
    static ArrayList<String> msg;
+   LogUtility log = new LogUtility();
 
 
    Superpeer(int port, String SharedDir, int peer_id) {
@@ -35,6 +35,7 @@ public class Superpeer extends Thread {
             while(true) {
                this.socket = this.serverSocket.accept();
                System.out.println("\nSuperpeer: " + this.peer_id + ", started at " + this.socket.getRemoteSocketAddress());
+               log.write("\nSuperpeer: " + this.peer_id + ", started at " + this.socket.getRemoteSocketAddress());
                (new Download(this.socket, this.FileDir, this.peer_id, msg)).start();
             }
          } catch (IOException var3) {

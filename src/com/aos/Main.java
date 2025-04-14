@@ -1,4 +1,4 @@
-package com.iit;
+package com.aos;
 
 import java.io.*;
 import java.net.Socket;
@@ -27,7 +27,7 @@ public class Main {
          FileInputStream is = new FileInputStream(fileName);
          prop.load(is);
          int io = Integer.parseInt(prop.getProperty("peer" + peer_id + ".serverport"));
-         FileDownloader sd = new FileDownloader(io, sharedDir);
+         FileDownloadManager sd = new FileDownloadManager(io, sharedDir);
          sd.start();
          int portserver = Integer.parseInt(prop.getProperty("peer" + peer_id + ".port"));
          Superpeer cs = new Superpeer(portserver, sharedDir, peer_id);
@@ -46,7 +46,7 @@ public class Main {
          for(peerswithfiles = 0; peerswithfiles < neighbours.length; ++peerswithfiles) {
             peerfromdownload = Integer.parseInt(prop.getProperty("peer" + neighbours[peerswithfiles] + ".port"));
             porttodownload = Integer.parseInt(neighbours[peerswithfiles]);
-            LeafNode j = new LeafNode(peerfromdownload, porttodownload, filetodownload, msgid, peer_id, ttl);
+            LeafNodeHandler j = new LeafNodeHandler(peerfromdownload, porttodownload, filetodownload, msgid, peer_id, ttl);
             Thread t = new Thread(j);
             t.start();
             thread.add(t);
@@ -66,7 +66,7 @@ public class Main {
          peerfromdownload = 0;
 
          for(porttodownload = 0; porttodownload < peers.size(); ++porttodownload) {
-            int[] var24 = ((LeafNode)peers.get(porttodownload)).getarray();
+            int[] var24 = ((LeafNodeHandler)peers.get(porttodownload)).getarray();
 
             for(int var25 = 0; var25 < var24.length && var24[var25] != 0; ++var25) {
                System.out.println(var24[var25]);
